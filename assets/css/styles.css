@@ -489,33 +489,32 @@ img {
 }
 
 .skills__html,
-.skills__figma,
-.skills__photoshop {
-  width: 90%;
-}
-
-.skills__react {
-  width: 85%;
-}
-
-.skills__css,
-.skills__php,
-.skills__firebase {
+.skills__affinity {
   width: 80%;
 }
 
-.skills__node,
-.skills__sketch {
+.skills__capcut {
+  width: 75%;
+}
+
+.skills__photoshop,
+.skills__figma {
   width: 70%;
 }
 
-.skills__js {
+.skills__css {
+  width: 65%;
+}
+
+.skills__php {
   width: 60%;
 }
 
-.skills__python {
+.skills__javascript,
+.skills__vbnet {
   width: 55%;
 }
+
 
 .skills__close .skills__list {
   height: 0;
