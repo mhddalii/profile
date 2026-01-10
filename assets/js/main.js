@@ -166,3 +166,101 @@ themeButton.addEventListener('click', () => {
     localStorage.setItem('selected-theme', getCurrentTheme())
     localStorage.setItem('selected-icon', getCurrentIcon())
 })
+
+// 1. Daftar Nama Lokasi dan Link Maps-nya
+const locationData = [
+    // Data Pendidikan
+    { name: 'SMP Negeri 22 Palembang', url: 'https://maps.app.goo.gl/VAeHR9yK7GNh9A4q6' },
+    { name: 'SMA Negeri 11 Palembang', url: 'https://maps.app.goo.gl/BRcadMANC74qudySA' },
+    { name: 'Politeknik Negeri Sriwijaya', url: 'https://maps.app.goo.gl/qJsjpimCQHr9foxq9' },
+    
+    // Data Pekerjaan / Pengalaman
+    { name: 'Project-based', url: 'https://github.com/mhddalii' }, // Bisa diarahkan ke Portfolio/Github
+    { name: 'Bappeda Litbang Palembang', url: 'https://maps.app.goo.gl/6A4jrjmH5JyvrKKv7' },
+    { name: 'HaramainKU – PT Kartika Utama', url: 'https://maps.app.goo.gl/p7zi17gzBC3eLNbs5' }
+];
+
+// 2. Ambil semua elemen subtitle
+const subtitles = document.querySelectorAll('.qualification__subtitle');
+
+// 3. Proses penambahan link dan efek hover
+subtitles.forEach(function(element) {
+    locationData.forEach(function(item) {
+        // Jika teks di elemen HTML cocok dengan nama di daftar kita
+        if (element.textContent.trim() === item.name) {
+            
+            // Bungkus teks dengan tag <a> secara dinamis
+            element.innerHTML = `<a href="${item.url}" target="_blank" class="dynamic-link">${item.name}</a>`;
+            
+            // Ambil elemen <a> yang baru dibuat
+            const link = element.querySelector('a');
+
+            // Tambahkan CSS langsung via JS agar tetap rapi
+            Object.assign(link.style, {
+                textDecoration: 'none',
+                color: 'inherit',
+                transition: '0.3s'
+            });
+
+            // Efek Hover: Berubah warna ke var(--first-color-alt)
+            link.addEventListener('mouseenter', () => {
+                link.style.color = 'var(--first-color-alt)';
+            });
+
+            // Efek Normal: Kembali ke warna asal
+            link.addEventListener('mouseleave', () => {
+                link.style.color = 'inherit';
+            });
+        }
+    });
+});
+
+// 1. Data Kontak
+const contactData = {
+    phone: {
+        text: '+62 895 2880 1338',
+        url: 'https://wa.me/6289528801338' // Format WhatsApp: https://wa.me/nomorhp (tanpa + atau spasi)
+    },
+    email: {
+        text: 'mhddalii11@gmail.com',
+        url: 'mailto:mhddalii11@gmail.com'
+    },
+    location: {
+        text: 'Palembang - Jln. Inspektur Marzuki',
+        url: 'https://www.google.com/maps/search/Kota+Palembang,+Sumatera+Selatan'
+    }
+};
+
+// 2. Ambil semua elemen contact subtitle
+const contactSubtitles = document.querySelectorAll('.contact__subtitle');
+
+// 3. Proses penambahan link dan efek hover
+contactSubtitles.forEach(function(element) {
+    const content = element.textContent.trim();
+    let targetUrl = '';
+
+    // Cek tipe konten berdasarkan teks
+    if (content === contactData.phone.text) {
+        targetUrl = contactData.phone.url;
+    } else if (content === contactData.email.text) {
+        targetUrl = contactData.email.url;
+    } else if (content === contactData.location.text) {
+        targetUrl = contactData.location.url;
+    }
+
+    if (targetUrl) {
+        // Ubah teks menjadi link secara dinamis
+        element.innerHTML = `<a href="${targetUrl}" target="_blank" style="text-decoration: none; color: inherit; transition: 0.3s;">${content}</a>`;
+        
+        const link = element.querySelector('a');
+
+        // Tambahkan efek hover agar konsisten dengan link pendidikan/pekerjaan sebelumnya
+        link.addEventListener('mouseenter', () => {
+            link.style.color = 'var(--first-color-alt)';
+        });
+
+        link.addEventListener('mouseleave', () => {
+            link.style.color = 'inherit';
+        });
+    }
+});
