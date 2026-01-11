@@ -689,15 +689,20 @@ img {
   background: rgba(0,0,0,.6);
 }
 
+body.dark-theme .modal__backdrop{
+  background: rgba(0,0,0,.8);
+}
+
 .modal__dialog{
   position: relative;
   width: min(95vw, 1100px);
   max-height: 85vh;
-  background: #fff;
+  background: var(--container-color);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  color: var(--text-color);
 }
 
 .modal__close{
@@ -708,18 +713,22 @@ img {
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--title-color);
 }
+
 
 .modal__title{
   padding: 16px;
   font-size: 20px;
   font-weight: 600;
+  color: var(--title-color);
 }
 
 .modal__body{
   padding: 8px;
   overflow-y: auto;
   flex: 1;
+  background: var(--container-color);
 }
 
 /* ================= GALERI ================= */
@@ -734,10 +743,10 @@ img {
 .gallery__item{
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;     /* INI KUNCI UTAMA */
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border-radius: 6px;
-  background: #eee;
+  background: var(--input-color);
 }
 
 /* GAMBAR DIPOTONG */
@@ -762,12 +771,13 @@ img {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.8);
+  background: rgba(0,0,0,.85);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10000;
 }
+
 
 .lightbox[aria-hidden="true"] {
   display: none;
@@ -779,8 +789,8 @@ img {
   height: 80vh;
   max-width: 900px;
   max-height: 600px;
-
   background: rgba(255, 255, 255, 0);
+  
   border-radius: 12px;
   padding: 12px;
 
@@ -788,17 +798,15 @@ img {
   justify-content: center;
   align-items: center;
 
-  overflow: hidden; /* 🔥 WAJIB */
+  overflow: hidden;
 }
 
 /* GAMBAR */
 .lightbox__content img {
   width: 100%;
   height: 100%;
-
-  object-fit: contain; /* 🔥 JAGA RASIO */
+  object-fit: contain;
   object-position: center;
-
   border-radius: 8px;
 }
 
@@ -808,9 +816,22 @@ img {
   top: 18px;
   right: 22px;
   font-size: 2rem;
-  color: #000;
+  color: var(--container-color);
   cursor: pointer;
   z-index: 10001;
+}
+
+.modal__body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal__body::-webkit-scrollbar-track {
+  background: var(--scroll-bar-color);
+}
+
+.modal__body::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb-color);
+  border-radius: 6px;
 }
 
 
