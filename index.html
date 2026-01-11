@@ -500,48 +500,58 @@
 
                 <div class="portfolio__container container swiper-container">
                     <div class="swiper-wrapper">
-                        <!--==================== PORTFOLI 1 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/portfolio1.jpg" alt="" class="portfolio__img">
+                        <!--==================== PORTFOLIO 1 ====================-->
+<div class="portfolio__content grid swiper-slide">
+  <img src="assets/img/portfolio1.png" alt="" class="portfolio__img">
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">Graphic Design</h3>
-                                <p class="portfolio__description">
-                                Graphic design work for social media and events, including posters, banners, and visual content created using Adobe Photoshop, Figma, and Affinity.
-                                </p>
-                                <a href="#" class="button button--flex button--samll portfolio__button">
-                                    Demo
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
+  <div class="portfolio__data">
+    <h3 class="portfolio__title">Graphic Design</h3>
+    <p class="portfolio__description">
+      Graphic design work for social media and events, including posters, banners, and visual content created using Adobe Photoshop, Figma, and Affinity.
+    </p>
+    <!-- ganti data-gallery-count bila sudah tahu jumlah gambarnya -->
+    <a href="#" class="button button--flex button--samll portfolio__button"
+       data-gallery-path="assets/img/desain"
+       data-gallery-count="30">
+      Demo
+      <i class="uil uil-arrow-right button__icon"></i>
+    </a>
+  </div>
+</div>
 
-                        <!--==================== PORTFOLI 2 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/portfolio2.jpg" alt="" class="portfolio__img">
+<!--==================== PORTFOLIO 2 ====================-->
+<div class="portfolio__content grid swiper-slide">
+  <img src="assets/img/portfolio2.png" alt="" class="portfolio__img">
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">Web Development</h3>
-                                <p class="portfolio__description">
-                                Web projects developed for academic and freelance purposes, focusing on responsive layouts, basic full-stack features, and simple data handling.
-                                </p>
-                                <a href="#" class="button button--flex button--samll portfolio__button">
-                                    Demo
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
+  <div class="portfolio__data">
+    <h3 class="portfolio__title">Web Development</h3>
+    <p class="portfolio__description">
+      Web projects developed for academic and freelance purposes, focusing on responsive layouts, basic full-stack features, and simple data handling.
+    </p>
+    <!-- ganti data-gallery-count bila sudah tahu jumlah gambarnya -->
+    <a href="#" class="button button--flex button--samll portfolio__button"
+       data-gallery-path="assets/img/web"
+       data-gallery-count="25">
+      Demo
+      <i class="uil uil-arrow-right button__icon"></i>
+    </a>
+  </div>
+</div>
+
 
                         <!--==================== PORTFOLI 3 ====================-->
                         <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/portfolio3.jpg" alt="" class="portfolio__img">
+                            <img src="assets/img/portfolio3.png" alt="" class="portfolio__img">
 
                             <div class="portfolio__data">
                                 <h3 class="portfolio__title">Basic Photography</h3> <p class="portfolio__description"> Photography for events and activities, used for documentation and social media needs, with basic photo editing and visual presentationstorytelling. </p>
-                                <a href="#" class="button button--flex button--samll portfolio__button">
+                                <a href="#" 
+                                    class="button button--flex button--samll portfolio__button"
+                                    data-gallery-path="assets/img/foto"
+                                    data-gallery-count="85">
                                     Demo
                                     <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
+                                    </a>
                             </div>
                         </div>
                     </div>
@@ -671,6 +681,32 @@
         <a href="#" class="scrollup" id="scroll-up">
             <i class="uil uil-arrow-up scrollup__icon"></i>
         </a>
+
+        <!-- MODAL GALERI -->
+        <div id="galleryModal" class="modal" aria-hidden="true">
+        <div class="modal__backdrop"></div>
+
+        <div class="modal__dialog">
+            <button class="modal__close">&times;</button>
+            <h2 class="modal__title" id="galleryTitle">Gallery</h2>
+
+            <div class="modal__body">
+            <div class="gallery" id="galleryGrid"></div>
+            </div>
+        </div>
+        </div>
+
+<!-- ================= LIGHTBOX ================= -->
+<div id="lightbox" class="lightbox" aria-hidden="true">
+  <div class="lightbox__overlay"></div>
+
+  <div class="lightbox__content" role="dialog" aria-modal="true">
+    <img id="lightboxImg" src="" alt="Preview image">
+  </div>
+
+  <button class="lightbox__close" aria-label="Close image">&times;</button>
+</div>
+
 
         <!--==================== SWIPER JS ====================-->
         <script src="assets/js/swiper-bundle.min.js"></script>

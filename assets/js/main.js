@@ -264,3 +264,147 @@ contactSubtitles.forEach(function(element) {
         });
     }
 });
+
+/* ================= GALERI MODAL ================= */
+const modal = document.getElementById('galleryModal');
+const galleryGrid = document.getElementById('galleryGrid');
+const modalClose = document.querySelector('.modal__close');
+const galleryTitle = document.getElementById('galleryTitle');
+
+/* ================= LIGHTBOX ================= */
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxClose = document.querySelector('.lightbox__close');
+const lightboxOverlay = document.querySelector('.lightbox__overlay');
+
+/* ================= UTIL: cek existence gambar (promise) ================= */
+function imageExists(url) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
+
+/* coba deteksi ekstensi dan jumlah gambar, maksimal maxLimit */
+async function detectGalleryInfo(path, maxLimit = 100) {
+  const exts = ['png', 'jpg', 'jpeg', 'webp'];
+  let foundExt = null;
+
+  // cari ekstensi yang ada untuk file 1.*
+  for (const ext of exts) {
+    if (await imageExists(`${path}/1.${ext}`)) {
+      foundExt = ext;
+      break;
+    }
+  }
+  if (!foundExt) return {count: 0, ext: null};
+
+  // hitung sampai gagal pertama (1..N)
+  let i = 1;
+  for (; i <= maxLimit; i++) {
+    const ok = await imageExists(`${path}/${i}.${foundExt}`);
+    if (!ok) break;
+  }
+  return {count: i - 1, ext: foundExt};
+}
+
+/* ================= BUKA MODAL (dengan auto-detect jika perlu) ================= */
+document.querySelectorAll('.portfolio__button').forEach(btn => {
+  btn.addEventListener('click', async e => {
+    e.preventDefault();
+
+    const rawPath = btn.dataset.galleryPath;
+    let count = parseInt(btn.dataset.galleryCount, 10);
+
+    const titleEl = btn.closest('.portfolio__content')?.querySelector('.portfolio__title');
+    galleryTitle.textContent = titleEl?.textContent || 'Gallery';
+    galleryGrid.innerHTML = '';
+
+    if (!rawPath) {
+      console.warn('Tidak ada data-gallery-path pada tombol gallery.');
+      return;
+    }
+
+    let usedExt = 'png'; // default fallback
+    if (isNaN(count) || count <= 0) {
+      // deteksi otomatis
+      const info = await detectGalleryInfo(rawPath, 100);
+      count = info.count;
+      if (info.ext) usedExt = info.ext;
+    }
+
+    if (!count || count <= 0) {
+      galleryGrid.innerHTML = `<p class="gallery__empty">Gallery kosong atau tidak ditemukan.</p>`;
+    } else {
+      for (let i = 1; i <= count; i++) {
+        const item = document.createElement('div');
+        item.className = 'gallery__item';
+
+        const img = document.createElement('img');
+        img.src = `${rawPath}/${i}.${usedExt}`;
+        img.loading = 'lazy';
+        img.alt = `Foto ${i}`;
+
+        item.appendChild(img);
+        galleryGrid.appendChild(item);
+      }
+    }
+
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  });
+});
+
+/* ================= TUTUP MODAL ================= */
+function closeModal(){
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+
+modalClose.addEventListener('click', closeModal);
+
+modal.addEventListener('click', e => {
+  if(e.target.classList.contains('modal__backdrop')){
+    closeModal();
+  }
+});
+
+/* ================= LIGHTBOX (tetap sama) ================= */
+/* buka lightbox */
+galleryGrid.addEventListener('click', e => {
+  const img = e.target.closest('img');
+  if (!img) return;
+
+  lightboxImg.src = img.src;
+  lightbox.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+});
+
+/* tutup lightbox */
+function closeLightbox() {
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightboxImg.src = '';
+}
+
+/* klik tombol close */
+lightboxClose.addEventListener('click', closeLightbox);
+
+/* klik overlay */
+lightbox.addEventListener('click', e => {
+  if (e.target.classList.contains('lightbox__overlay')) {
+    closeLightbox();
+  }
+});
+
+/* ESC priority */
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (lightbox.getAttribute('aria-hidden') === 'false') {
+      closeLightbox();
+    } else if (modal.getAttribute('aria-hidden') === 'false') {
+      closeModal();
+    }
+  }
+});
